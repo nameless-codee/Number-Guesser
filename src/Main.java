@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +10,7 @@ public class Main {
         while (true) {
             int chances = 0;
             int attempts;
+
             long startTime = System.nanoTime();
 
             String welcomeText = """
@@ -51,6 +53,8 @@ public class Main {
             int randomNum = (int) (Math.random() * 101);
 
             for (attempts = 0; attempts < chances; attempts++) {
+                int attemptNumber = attempts + 1;
+
                 System.out.println();
                 System.out.print("Enter your guess: ");
                 int guess = scan.nextInt();
@@ -68,7 +72,8 @@ public class Main {
                     // Convert the duration to a more readable format (seconds)
                     long durationInSeconds = TimeUnit.NANOSECONDS.toSeconds(durationInNano);
 
-                    System.out.printf("Congratulations! You guessed the correct number in %d attempts within %d seconds.%n%n", attempts + 1, durationInSeconds);
+                    System.out.printf("Congratulations! You guessed the correct number in %d attempts within %d seconds.%n%n", attemptNumber, durationInSeconds);
+
                     break;
                 }
             }
