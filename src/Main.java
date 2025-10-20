@@ -1,13 +1,16 @@
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        int chances = 0;
-        int attempts;
 
         main:
         while (true) {
+            int chances = 0;
+            int attempts;
+            long startTime = System.nanoTime();
+
             String welcomeText = """
                     Welcome to the Number Guessing Game!
                     I'm thinking of a number between 1 and 100.
@@ -57,7 +60,15 @@ public class Main {
                 } else if (guess > randomNum) {
                     System.out.printf("Incorrect! The number is less than %d%n", guess);
                 } else {
-                    System.out.printf("Congratulations! You guessed the correct number in %d attempts.%n%n", attempts + 1);
+                    long endTime = System.nanoTime();
+
+                    // Calculate the duration
+                    long durationInNano = endTime - startTime;
+
+                    // Convert the duration to a more readable format (seconds)
+                    long durationInSeconds = TimeUnit.NANOSECONDS.toSeconds(durationInNano);
+
+                    System.out.printf("Congratulations! You guessed the correct number in %d attempts within %d seconds.%n%n", attempts + 1, durationInSeconds);
                     break;
                 }
             }
@@ -69,14 +80,14 @@ public class Main {
             }
 
             while (true) {
-                System.out.println("Press 'Q' to quit or 'R' to restart");
+                System.out.println("Press 'Q' to quit or 'C' to continue");
 
                 char quit = scan.next().charAt(0);
                 System.out.println();
 
                 if (quit == 'Q' || quit == 'q') {
                     break main;
-                } else if (quit == 'R' || quit == 'r') {
+                } else if (quit == 'C' || quit == 'c') {
                     continue main;
                 } else {
                     System.out.println("Invalid input! Please try again.");
